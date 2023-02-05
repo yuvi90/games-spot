@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux'
 // Styling & Animation
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
+import { useNavigate } from "react-router-dom";
+import { smallImage } from '../util'
 
 const CardShadow = styled(motion.div)`
     width: 100%;
@@ -13,6 +15,7 @@ const CardShadow = styled(motion.div)`
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 5;
 `
 
 const Detail = styled(motion.div)`
@@ -23,6 +26,7 @@ const Detail = styled(motion.div)`
     position: absolute;
     left: 10%;
     color: #000;
+    z-index: 10;
 
     img {
         width: 100%;
@@ -58,47 +62,59 @@ const Detail = styled(motion.div)`
     }
 `
 
-export const GameDetail = () => {
-    const { game, screens } = useSelector((state) => state.details)
+export const GameDetail = ({ gameId }) => {
+
+    const pathTo = useNavigate();
+
+    const { game, screens, isLoading } = useSelector((state) => state.details)
+
+    const exitHandler = (e) => {
+        if (e.target.classList.contains('shadow')) {
+            document.body.style.overflow = "auto";
+            pathTo("/");
+        }
+    }
 
     return (
         <>
-            <CardShadow>
-                <Detail>
-                    <div className="stats">
-                        <div className="rating">
-                            <h3>{game.name}</h3>
-                            <p>Rating: {game.rating}</p>
-                        </div>
-                        <div className="info">
-                            <h3>Platforms</h3>
-                            <div className="platforms">
-                                {game.platforms.map(data => {
-                                    return (
-                                        <h3 key={data.platform.id}>
-                                            {data.platform.name}
-                                        </h3>
-                                    )
-                                }
-                                )}
+            {!isLoading ? <span class="loader"></span> : (
+                <CardShadow className='shadow' onClick={(e) => exitHandler(e)}>
+                    <Detail layoutId={gameId}>
+                        <div className="stats">
+                            <div className="rating">
+                                <motion.h3 layoutId={`title ${gameId}`}>{game.name}</motion.h3>
+                                <p>Rating: {game.rating}</p>
+                            </div>
+                            <div className="info">
+                                <h3>Platforms</h3>
+                                <div className="platforms">
+                                    {game.platforms.map(data => {
+                                        return (
+                                            <h3 key={data.platform.id}>
+                                                {data.platform.name}
+                                            </h3>
+                                        )
+                                    }
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="media">
-                        <img src={game.background_image} alt="image" />
-                    </div>
-                    <div className="description">
-                        <p>{game.description_raw}</p>
-                    </div>
-                    <div className="gallery">
-                        {
-                            screens.results.map((img) => {
-                                return <img src={img.image} alt="game" key={img.image} />
-                            })
-                        }
-                    </div>
-                </Detail>
-            </CardShadow>
+                        <div className="media">
+                            <motion.img layoutId={`image ${gameId}`} src={smallImage(game.background_image, 1280)} alt="image" />
+                        </div>
+                        <div className="description">
+                            <p>{game.description_raw}</p>
+                        </div>
+                        <div className="gallery">
+                            {
+                                screens.results.map((img) => {
+                                    return <img src={smallImage(img.image, 1280)} alt="game" key={img.image} />
+                                })
+                            }
+                        </div>
+                    </Detail>
+                </CardShadow>
+            )}
         </>
     )
 }

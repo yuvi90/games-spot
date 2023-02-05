@@ -1,3 +1,6 @@
 import { Game } from "./Game";
 import { GameDetail } from "./GameDetail";
-export { Game, GameDetail };
+import { Sidebar } from "./Sidebar";
+import { TopBar } from "./TopBar";
+
+export { Game, GameDetail, Sidebar, TopBar };

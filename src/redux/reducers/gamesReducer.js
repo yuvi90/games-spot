@@ -15,6 +15,10 @@ const gamesReducer = (state = initState, action) => {
                 newGames: action.payload.newGames,
                 upComing: action.payload.upcoming,
             }
+        case "LOADING_STATE":
+            return {
+                ...state,
+            }
         default:
             return { ...state }
     }
