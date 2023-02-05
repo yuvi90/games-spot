@@ -12,20 +12,32 @@ import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
 //--------------------------------------------------|
 // Styles
 
+const SectionDiv = styled.section`
+    padding: 2rem 3rem;
+
+    @media screen and (max-width:650px) {
+        padding: 1rem 2rem;
+    }
+`
+
 const GameList = styled(motion.div)`
-    /* margin-top: 3rem; */
-    padding: 0 4rem;
-    `
+    margin-top: 2rem;
+    @media screen and (max-width:650px) {
+        margin-top: 1rem;
+    }
+`
 const Games = styled(motion.div)`
-    padding: 4rem 0;
-    cursor: pointer;
+    margin: 3rem 0;
     min-height: 80vh;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    /* grid-template-columns: repeat(auto-fit, minmax(500px, 1fr)); */
-    grid-column-gap: 2rem;
-    grid-row-gap: 3rem;
-    `
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+
+    @media screen and (max-width:650px) {
+        grid-template-columns: repeat(1, minmax(250px, 1fr));
+        margin-top: 1rem;
+    }
+`
 
 
 //--------------------------------------------------|
@@ -41,26 +53,14 @@ const Home = () => {
     const { popular, newGames, upComing } = useSelector(state => state.games);
 
     return (
-        <>
-            <AnimateSharedLayout type='crossfade'>
-                <AnimatePresence><Outlet /></AnimatePresence>
-                <GameList>
-                    <h2>Upcoming Games</h2>
-                    <Games>
-                        {upComing.map((game) => {
-                            return (
-                                <Game
-                                    key={game.id}
-                                    id={game.id}
-                                    name={game.name}
-                                    image={game.background_image}
-                                    released={game.released}
-                                />
-                            );
-                        })}
-                    </Games>
-                </GameList>
+        <SectionDiv>
 
+            <AnimateSharedLayout type='crossfade'>
+                
+                <AnimatePresence>
+                    <Outlet />
+                </AnimatePresence>
+                
                 <GameList>
                     <h2>Popular Games</h2>
                     <Games>
@@ -94,8 +94,27 @@ const Home = () => {
                         })}
                     </Games>
                 </GameList>
+
+                <GameList>
+                    <h2>Upcoming Games</h2>
+                    <Games>
+                        {upComing.map((game) => {
+                            return (
+                                <Game
+                                    key={game.id}
+                                    id={game.id}
+                                    name={game.name}
+                                    image={game.background_image}
+                                    released={game.released}
+                                />
+                            );
+                        })}
+                    </Games>
+                </GameList>
+
             </AnimateSharedLayout>
-        </>
+
+        </SectionDiv>
     )
 }
 

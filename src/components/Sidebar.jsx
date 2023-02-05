@@ -10,15 +10,15 @@ import { motion } from 'framer-motion';
 export const Sidebar = () => {
     return (
         <SideBarDiv>
-            <div className="logo">
-                <h1>GAMESpot</h1>
-            </div>
-            <div className="menu">
+            <nav className="menu">
                 <ul>
                     <li>Home</li>
+                    <li>New Releases</li>
+                    <li>All Games</li>
+                    <li>Top</li>
                     <li>Reviews</li>
                 </ul>
-            </div>
+            </nav>
         </SideBarDiv>
     )
 }
@@ -27,33 +27,28 @@ export const Sidebar = () => {
 //Styling
 
 const SideBarDiv = styled.aside`
-    /* background: grey; */
+    position: fixed;
+    margin-top: 120px;
     width: 250px;
     height: 100%;
 
-    .logo {
-        margin-top: 100px;
-        padding-top: 1.5rem;
-        color: #fff;
-    }
+    .menu {
+        padding-left: 3rem;
 
-    .logo h1 {
-        font-size: 1.8rem;
-    }
-    
-    .menu ul {
-        margin-top: 2.5rem;
-        color: #fff;
-        font-size: 2.5rem;
-        font-weight: bold;
-        list-style: none;
+        ul {
+            color: #fff;
+            font-size: 1.6rem;
+            font-weight: bold;
+            list-style: none;
+            margin-top: 5rem;
 
-        li {
-            cursor: pointer;
-            margin-top: 1.5rem;
-            
-            &:hover {
-                color: #3B3B3B;
+            li {
+                cursor: pointer;
+                margin-top: 1rem;
+                
+                &:hover {
+                    color: #3B3B3B;
+                }
             }
         }
     }

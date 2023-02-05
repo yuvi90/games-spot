@@ -32,13 +32,13 @@ const GlobalStyle = createGlobalStyle`
             font-weight: bold;
         }
         h3 {
-            font-size: 1.3rem;
             color: #fff;
+            font-size: 1.3rem;
         }
         p {
+            color: #fff;
             font-size: 1.2rem;
             line-height: 200%;
-            color: #696969;
         }
         a {
             text-decoration: none;
@@ -48,20 +48,35 @@ const GlobalStyle = createGlobalStyle`
         }        
     }
 
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        max-width: 1600px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: #151515ed;
+    }
+
     .main-container {
         margin: 0 auto;
         max-width: 1600px;
-        height: 100vh;
+        position: relative;
         display: flex;
     }
 
     .content-wrapper {
+        margin-top: 120px;
+        margin-left: 250px;
         position: relative;
         width: 100%;
-        overflow-y: scroll;
-    }
-
-    .content {
+        min-height: 100vh;
+        
+        @media screen and (max-width:980px) {
+            margin-left: 0;
+        }
     }
 
     .loader {

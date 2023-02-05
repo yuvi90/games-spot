@@ -1,7 +1,9 @@
 import React from 'react'
-import { FaSteam, FaPlaystation, FaWindows } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import { smallImage } from '../util'
+// Icons
+import { FaSteam, FaPlaystation, FaWindows, FaXbox } from 'react-icons/fa'
+import { TiPlus } from 'react-icons/ti'
 // Styling & Animation
 import styled from 'styled-components'
 import { motion } from 'framer-motion'
@@ -13,32 +15,63 @@ import { loadDetail } from '../redux/actions/detailActions'
 // Styles
 
 const GameContainer = styled(motion.div)`
-    height: 40vh;
-    box-shadow: 0px 5px 30px rgba(0,0,0,0.2);
-    text-align: left;
+    height: 450px;
+    background: rgba(0,0,0,0.3);
+    box-shadow: 0px 5px 50px rgba(23, 23, 23, 0.2);
     border-radius: 1rem;
     overflow: hidden;
-
-    h3 {
-        margin:  0 1rem;
-    }
+    transition: all 0.5s ease;
+    position: relative;
 
     img {
         width: 100%;
         height: 60%;
         object-fit: cover;
     }
-    
-    &:hover {
-        background: rgba(0,0,0,0.3);
-    }
-    
-    .platform-icons {
-        color: #fff;
 
-        svg {
-            margin-left: 1rem;
+    .game-details {
+        margin-top: 1.5rem;
+        padding: 0 1rem;
+        height: 135px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+
+        .platform-icons {
+            color: #fff;
+            display: flex;
+            gap: 0.5rem;
         }
+
+        h3 {
+            &:hover {
+                color: rgba(0,0,0,0.3);
+            }
+        }
+
+        button {
+            margin-top: auto;
+            cursor: pointer;
+            font-size: 20px;
+            color: #fff;
+            background: rgba(41, 41, 41, 0.3);
+            border: none;
+            border-radius: 5px;
+            padding: 5px 0;
+            width: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &:hover {
+                background: rgba(105, 105, 105, 0.3);
+            }
+        }
+    }
+
+    &:hover {
+        background: #3B3B3B;
     }
 `
 
@@ -59,13 +92,17 @@ export const Game = ({ name, released, image, id }) => {
         <GameContainer layoutId={gameId} onClick={loadDetailHandler}>
             <Link to={`/games/${id.toString()}`}>
                 <motion.img layoutId={`image ${gameId}`} src={smallImage(image, 640)} alt={name} />
-                <div className='platform-icons'>
-                    <FaWindows />
-                    <FaPlaystation />
-                    <FaSteam />
+                <div className='game-details'>
+                    <div className='platform-icons'>
+                        <FaWindows />
+                        <FaPlaystation />
+                        <FaXbox />
+                        <FaSteam />
+                    </div>
+                    <motion.h3 layoutId={`title ${gameId}`}>{name}</motion.h3>
+                    <button><TiPlus /></button>
+                    {/* <p>{released}</p> */}
                 </div>
-                <motion.h3 layoutId={`title ${gameId}`}>{name}</motion.h3>
-                {/* <p>{released}</p> */}
             </Link>
         </GameContainer>
     )
