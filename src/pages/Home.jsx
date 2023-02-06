@@ -74,6 +74,7 @@ const Home = () => {
                                     name={game.name}
                                     image={game.background_image}
                                     released={game.released}
+                                    platforms={game.platforms}
                                 />
                             );
                         })}
@@ -94,6 +95,7 @@ const Home = () => {
                                     name={game.name}
                                     image={game.background_image}
                                     released={game.released}
+                                    platforms={game.platforms}
                                 />
                             );
                         })}
@@ -114,6 +116,7 @@ const Home = () => {
                                     name={game.name}
                                     image={game.background_image}
                                     released={game.released}
+                                    platforms={game.platforms}
                                 />
                             );
                         })}

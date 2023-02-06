@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { smallImage } from '../util'
 // Icons
-import { FaSteam, FaPlaystation, FaWindows, FaXbox } from 'react-icons/fa'
+import { FaSteam, FaPlaystation, FaGamepad, FaXbox } from 'react-icons/fa'
 import { TiPlus } from 'react-icons/ti'
 // Styling & Animation
 import styled from 'styled-components'
@@ -83,7 +83,7 @@ const GameContainer = styled(motion.div)`
 
 //--------------------------------------------------|
 
-export const Game = ({ name, image, id }) => {
+export const Game = ({ name, image, id, platforms }) => {
 
     // Load Details
     const dispatch = useDispatch();
@@ -92,16 +92,31 @@ export const Game = ({ name, image, id }) => {
         dispatch(loadDetail(id));
     }
 
+    function getPlatform(platform, key) {
+        switch(platform){
+            case "PC":
+                return <FaSteam key={key}/>
+            case "Playstaion" || "Playstaion 4" || "Playstaion 5":
+                return <FaPlaystation key={key}/>
+            case "Xbox" || "Xbox X" || "Xbox S":
+                return <FaXbox key={key} />
+            default:
+                return <FaGamepad key={key}/>  
+        }
+    }
+
     return (
         <GameContainer onClick={loadDetailHandler}>
             <Link to={`/games/${id.toString()}`}>
                 <img src={smallImage(image, 640)} alt={name} className="game-dp" />
                 <div className='game-details'>
                     <div className='platform-icons'>
-                        <FaWindows />
-                        <FaPlaystation />
-                        <FaXbox />
-                        <FaSteam />
+                        {platforms.map(data => {
+                             return (
+                                     getPlatform(data.platform.name, data.platform.id)
+                                    )
+                            }
+                        )}
                     </div>
                     <h3>{name}</h3>
                     <button><TiPlus /></button>

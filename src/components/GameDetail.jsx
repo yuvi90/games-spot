@@ -6,6 +6,9 @@ import styled from 'styled-components'
 import { motion } from 'framer-motion'
 import { useNavigate } from "react-router-dom";
 import { smallImage } from '../util'
+import { FaSteam, FaPlaystation, FaGamepad, FaXbox } from 'react-icons/fa'
+
+//--------------------------------------------------|
 
 const CardShadow = styled(motion.div)`
     width: 100%;
@@ -51,10 +54,10 @@ const Detail = styled(motion.div)`
 
     .platforms {
         display: flex;
-        justify-content: space-evenly;
-        img {
-            margin-left: 3rem;
-        } 
+        justify-content: center;
+        gap: 0.8rem;
+        font-size: 1.5rem;
+        margin-top: 0.2rem;
     }
 
     .media {
@@ -69,6 +72,8 @@ const Detail = styled(motion.div)`
     }
 `
 
+//--------------------------------------------------|
+
 export const GameDetail = () => {
 
     const pathTo = useNavigate();
@@ -79,6 +84,19 @@ export const GameDetail = () => {
         if (e.target.classList.contains('shadow')) {
             document.body.style.overflow = "auto";
             pathTo("/");
+        }
+    }
+
+    function getPlatform(platform, key) {
+        switch(platform){
+            case "PC":
+                return <FaSteam key={key}/>
+            case "Playstaion" || "Playstaion 4" || "Playstaion 5":
+                return <FaPlaystation key={key}/>
+            case "Xbox" || "Xbox X" || "Xbox S":
+                return <FaXbox key={key} />
+            default:
+                return <FaGamepad key={key}/>  
         }
     }
 
@@ -99,9 +117,7 @@ export const GameDetail = () => {
                                     <div className="platforms">
                                         {game.platforms.map(data => {
                                             return (
-                                                <h3 key={data.platform.id}>
-                                                    {data.platform.name}
-                                                </h3>
+                                                getPlatform(data.platform.name, data.platform.id)
                                             )
                                         }
                                         )}
