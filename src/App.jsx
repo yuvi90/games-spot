@@ -9,8 +9,7 @@ import { Home } from './pages'
 //-------------------------------------------------------------|
 
 const App = () => {
-  
-  const [isMobileView, setMobileView] = useState(false);
+
   const [innerWidth, setInnerWidth] = useState(null);
   useEffect(() => {
     setInnerWidth(window.innerWidth)
@@ -27,8 +26,9 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
+      <TopBar />
+      
       <div className='main-container'>
-        <TopBar />
         {innerWidth > 980 ?
           <Sidebar />
           : null
@@ -39,14 +39,15 @@ const App = () => {
               <Route path="/" element={<Home />} >
                 <Route
                   path="/games/:id"
-                  element={gameId && <GameDetail gameId={gameId} />}
+                  element={gameId && <GameDetail />}
                 />
               </Route>
             </Routes>
           </div>
         </main>
-        <Footer />
       </div>
+
+      <Footer />
     </>
   )
 }

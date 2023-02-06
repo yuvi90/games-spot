@@ -27,6 +27,7 @@ const GameContainer = styled(motion.div)`
         width: 100%;
         height: 60%;
         object-fit: cover;
+        transition: all 0.5s ease;
     }
 
     .game-details {
@@ -45,6 +46,7 @@ const GameContainer = styled(motion.div)`
         }
 
         h3 {
+            font-size: 1.1rem;
             &:hover {
                 color: rgba(0,0,0,0.3);
             }
@@ -73,13 +75,15 @@ const GameContainer = styled(motion.div)`
     &:hover {
         background: #3B3B3B;
     }
+
+    &:hover .game-dp {
+        transform: scale(1.1);
+    }
 `
 
 //--------------------------------------------------|
 
-export const Game = ({ name, released, image, id }) => {
-
-    const gameId = id.toString();
+export const Game = ({ name, image, id }) => {
 
     // Load Details
     const dispatch = useDispatch();
@@ -89,9 +93,9 @@ export const Game = ({ name, released, image, id }) => {
     }
 
     return (
-        <GameContainer layoutId={gameId} onClick={loadDetailHandler}>
+        <GameContainer onClick={loadDetailHandler}>
             <Link to={`/games/${id.toString()}`}>
-                <motion.img layoutId={`image ${gameId}`} src={smallImage(image, 640)} alt={name} />
+                <img src={smallImage(image, 640)} alt={name} className="game-dp" />
                 <div className='game-details'>
                     <div className='platform-icons'>
                         <FaWindows />
@@ -99,9 +103,8 @@ export const Game = ({ name, released, image, id }) => {
                         <FaXbox />
                         <FaSteam />
                     </div>
-                    <motion.h3 layoutId={`title ${gameId}`}>{name}</motion.h3>
+                    <h3>{name}</h3>
                     <button><TiPlus /></button>
-                    {/* <p>{released}</p> */}
                 </div>
             </Link>
         </GameContainer>

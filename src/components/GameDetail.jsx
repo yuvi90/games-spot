@@ -10,23 +10,30 @@ import { smallImage } from '../util'
 const CardShadow = styled(motion.div)`
     width: 100%;
     min-height: 100vh;
-    overflow-y: scroll;
     background: rgba(0,0,0,0.5);
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 5;
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 const Detail = styled(motion.div)`
     width: 80%;
+    max-width: 800px;
+    height: 800px;
+    overflow-y: scroll;
     border-radius: 1rem;
     padding: 2rem 5rem;
-    background: #fff;
-    position: absolute;
-    left: 10%;
-    color: #000;
-    z-index: 10;
+    background: #151515;
+    color: #fff;
+    z-index: 1000;
+
+    &::-webkit-scrollbar {
+     display: none;
+    }
 
     img {
         width: 100%;
@@ -62,7 +69,7 @@ const Detail = styled(motion.div)`
     }
 `
 
-export const GameDetail = ({ gameId }) => {
+export const GameDetail = () => {
 
     const pathTo = useNavigate();
 
@@ -77,44 +84,46 @@ export const GameDetail = ({ gameId }) => {
 
     return (
         <>
-            {!isLoading ? <span class="loader"></span> : (
-                <CardShadow className='shadow' onClick={(e) => exitHandler(e)}>
-                    <Detail layoutId={gameId}>
-                        <div className="stats">
-                            <div className="rating">
-                                <motion.h3 layoutId={`title ${gameId}`}>{game.name}</motion.h3>
-                                <p>Rating: {game.rating}</p>
-                            </div>
-                            <div className="info">
-                                <h3>Platforms</h3>
-                                <div className="platforms">
-                                    {game.platforms.map(data => {
-                                        return (
-                                            <h3 key={data.platform.id}>
-                                                {data.platform.name}
-                                            </h3>
-                                        )
-                                    }
-                                    )}
+            <CardShadow className='shadow' onClick={(e) => exitHandler(e)}>
+                {isLoading ?
+                    <div className='loading'><span className="loader"></span></div>
+                    : (
+                        <Detail>
+                            <div className="stats">
+                                <div className="rating">
+                                    <h3>{game.name}</h3>
+                                    <p>Rating: {game.rating}</p>
+                                </div>
+                                <div className="info">
+                                    <h3>Platforms</h3>
+                                    <div className="platforms">
+                                        {game.platforms.map(data => {
+                                            return (
+                                                <h3 key={data.platform.id}>
+                                                    {data.platform.name}
+                                                </h3>
+                                            )
+                                        }
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="media">
-                            <motion.img layoutId={`image ${gameId}`} src={smallImage(game.background_image, 1280)} alt="image" />
-                        </div>
-                        <div className="description">
-                            <p>{game.description_raw}</p>
-                        </div>
-                        <div className="gallery">
-                            {
-                                screens.results.map((img) => {
-                                    return <img src={smallImage(img.image, 1280)} alt="game" key={img.image} />
-                                })
-                            }
-                        </div>
-                    </Detail>
-                </CardShadow>
-            )}
+                            <div className="media">
+                                <img src={smallImage(game.background_image, 1280)} alt="image" />
+                            </div>
+                            <div className="description">
+                                <p>{game.description_raw}</p>
+                            </div>
+                            <div className="gallery">
+                                {
+                                    screens.results.map((img) => {
+                                        return <img src={smallImage(img.image, 1280)} alt="game" key={img.image} />
+                                    })
+                                }
+                            </div>
+                        </Detail>
+                    )}
+            </CardShadow>
         </>
     )
 }

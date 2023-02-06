@@ -22,13 +22,13 @@ const GlobalStyle = createGlobalStyle`
 
     html {
         body {
-            font-family: 'Segoe UI';
+            font-family: 'Poppins', sans-serif;
             background: #151515;
         }
         h2 {
             color: #fff;
-            font-family: 'Segoe UI';
-            font-size: 3rem;
+            font-family: 'Poppins', sans-serif;
+            font-size: 4rem;
             font-weight: bold;
         }
         h3 {
@@ -48,18 +48,6 @@ const GlobalStyle = createGlobalStyle`
         }        
     }
 
-    footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        max-width: 1600px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        background: #151515ed;
-    }
-
     .main-container {
         margin: 0 auto;
         max-width: 1600px;
@@ -68,13 +56,23 @@ const GlobalStyle = createGlobalStyle`
     }
 
     .content-wrapper {
-        margin-top: 120px;
-        margin-left: 250px;
+        margin-top: 10vh;
+        margin-left: 280px;
         position: relative;
         width: 100%;
         min-height: 100vh;
-        
-        @media screen and (max-width:980px) {
+    }
+
+    @media screen and (max-width:650px) {
+        body h2 {
+            font-size: 2rem;
+        }
+    }
+    @media screen and (max-width:980px) {
+        body h2 {
+            font-size: 3rem;
+        }
+        .content-wrapper {
             margin-left: 0;
         }
     }

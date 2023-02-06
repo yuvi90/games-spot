@@ -5,6 +5,9 @@ import { popularGamesUrl, newGamesUrl, upcomingGamesUrl } from "../../api";
 
 export const loadGames = () => {
     return async (dispatch) => {
+        dispatch({
+            type: "LOADING_STATE",
+        })
         // Fetch Axios
         const popularData = await axios.get(popularGamesUrl());
         const upComingGamesData = await axios.get(upcomingGamesUrl());

@@ -3,6 +3,7 @@ const initState = {
     newGames: [],
     upComing: [],
     searched: [],
+    isLoading: true,
 }
 
 // REDUCERS
@@ -14,11 +15,10 @@ const gamesReducer = (state = initState, action) => {
                 popular: action.payload.popular,
                 newGames: action.payload.newGames,
                 upComing: action.payload.upcoming,
+                isLoading: false
             }
         case "LOADING_STATE":
-            return {
-                ...state,
-            }
+            return { ...state, isLoading: true }
         default:
             return { ...state }
     }

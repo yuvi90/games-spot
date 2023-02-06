@@ -7,23 +7,29 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadGames } from '../redux/actions/gamesActions'
 // Styling & Animation
 import styled from 'styled-components'
-import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 //--------------------------------------------------|
 // Styles
 
 const SectionDiv = styled.section`
-    padding: 2rem 3rem;
+    padding: 2rem 6rem;
+
+    @media screen and (max-width:980px) {
+        padding: 1rem 3rem;
+    }
 
     @media screen and (max-width:650px) {
-        padding: 1rem 2rem;
+        padding: 2rem 2rem;
     }
 `
 
 const GameList = styled(motion.div)`
-    margin-top: 2rem;
-    @media screen and (max-width:650px) {
-        margin-top: 1rem;
+    .loading {
+        ${(props) => props.isLoading ? "display: flex;": null}
+        ${(props) => props.isLoading ? "justify-content: center;": null}
+        ${(props) => props.isLoading ? "align-items: center;": null}
+        ${(props) => props.isLoading ? "min-height: 50vh;": null}
     }
 `
 const Games = styled(motion.div)`
@@ -35,10 +41,8 @@ const Games = styled(motion.div)`
 
     @media screen and (max-width:650px) {
         grid-template-columns: repeat(1, minmax(250px, 1fr));
-        margin-top: 1rem;
     }
 `
-
 
 //--------------------------------------------------|
 
@@ -48,21 +52,19 @@ const Home = () => {
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(loadGames());
-    }, [dispatch])
+    }, [])
     // Get that data back
-    const { popular, newGames, upComing } = useSelector(state => state.games);
+    const { popular, newGames, upComing, isLoading } = useSelector(state => state.games);
 
     return (
         <SectionDiv>
 
-            <AnimateSharedLayout type='crossfade'>
-                
-                <AnimatePresence>
-                    <Outlet />
-                </AnimatePresence>
-                
-                <GameList>
-                    <h2>Popular Games</h2>
+            <Outlet />
+
+            <GameList isLoading={isLoading} >
+                <h2>Popular Games</h2>
+                {isLoading ?
+                    <div className='loading'><span className="loader"></span></div> :
                     <Games>
                         {popular.map((game) => {
                             return (
@@ -76,10 +78,13 @@ const Home = () => {
                             );
                         })}
                     </Games>
-                </GameList>
+                }
+            </GameList>
 
-                <GameList>
-                    <h2>New Games</h2>
+            <GameList isLoading={isLoading} >
+                <h2>New Games</h2>
+                {isLoading ?
+                    <div className='loading'><span className="loader"></span></div> :
                     <Games>
                         {newGames.map((game) => {
                             return (
@@ -93,10 +98,13 @@ const Home = () => {
                             );
                         })}
                     </Games>
-                </GameList>
+                }
+            </GameList>
 
-                <GameList>
-                    <h2>Upcoming Games</h2>
+            <GameList isLoading={isLoading} >
+                <h2>Upcoming Games</h2>
+                {isLoading ?
+                    <div className='loading'><span className="loader"></span></div> :
                     <Games>
                         {upComing.map((game) => {
                             return (
@@ -110,9 +118,8 @@ const Home = () => {
                             );
                         })}
                     </Games>
-                </GameList>
-
-            </AnimateSharedLayout>
+                }
+            </GameList>
 
         </SectionDiv>
     )
