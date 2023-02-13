@@ -1,4 +1,5 @@
-import { loadGames } from "./gamesActions";
+import { loadGames, seacrchGames } from "./gamesActions";
 import { loadDetail } from "./detailActions";
+import { loadAllGames } from "./allGamesActions";
 
-export { loadGames, loadDetail };
+export { loadGames, loadDetail, loadAllGames, seacrchGames };

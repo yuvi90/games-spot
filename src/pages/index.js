@@ -1,3 +1,5 @@
+import AllGames from "./AllGames";
 import Home from "./Home";
+import SearchGames from "./SearchGames";
 
-export { Home }; 
+export { Home, AllGames, SearchGames }; 

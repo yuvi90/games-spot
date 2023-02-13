@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 //----------------------------------------|
@@ -8,11 +9,8 @@ export const Sidebar = () => {
         <SideBarDiv>
             <nav className="menu">
                 <ul>
-                    <li>Home</li>
-                    <li>New Releases</li>
-                    <li>All Games</li>
-                    <li>Top</li>
-                    <li>Reviews</li>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/all-games">All Games</Link></li>
                 </ul>
             </nav>
         </SideBarDiv>
@@ -39,8 +37,13 @@ const SideBarDiv = styled.aside`
             li {
                 cursor: pointer;
                 margin-top: 1rem;               
-                &:hover {
-                    color: #3B3B3B;
+                a, a:visited {
+                    text-decoration: none;
+                    color: #fff;
+
+                    &:hover {
+                        color: #3B3B3B;
+                    }
                 }
             }
         }

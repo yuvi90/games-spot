@@ -1,12 +1,12 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { smallImage } from '../util'
 // Icons
 import { FaSteam, FaPlaystation, FaGamepad, FaXbox } from 'react-icons/fa'
 import { TiPlus } from 'react-icons/ti'
-// Styling & Animation
+// Styling
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
+
 // Redux
 import { useDispatch } from 'react-redux'
 import { loadDetail } from '../redux/actions/detailActions'
@@ -14,7 +14,7 @@ import { loadDetail } from '../redux/actions/detailActions'
 //--------------------------------------------------|
 // Styles
 
-const GameContainer = styled(motion.div)`
+const GameContainer = styled.div`
     height: 450px;
     background: rgba(0,0,0,0.3);
     box-shadow: 0px 5px 50px rgba(23, 23, 23, 0.2);
@@ -93,29 +93,42 @@ export const Game = ({ name, image, id, platforms }) => {
     }
 
     function getPlatform(platform, key) {
-        switch(platform){
-            case "PC":
-                return <FaSteam key={key}/>
-            case "Playstaion" || "Playstaion 4" || "Playstaion 5":
-                return <FaPlaystation key={key}/>
-            case "Xbox" || "Xbox X" || "Xbox S":
-                return <FaXbox key={key} />
+        const platformName = platform.toLowerCase();
+        if (platformName.includes("pc")) {
+            return <FaSteam key={key} />
+        }
+        if (platformName.includes("playstation")) {
+            return <FaPlaystation key={key} />
+        }
+        if (platformName.includes("xbox")) {
+            return <FaXbox key={key} />
+        }
+        return <FaGamepad key={key} />
+    }
+
+    const path = useLocation().pathname.split("/")[1];
+    function getLink() {
+        switch (path) {
+            case "all-games":
+                return "all-games"
+            case "search":
+                return "search"
             default:
-                return <FaGamepad key={key}/>  
+                return "games"
         }
     }
 
     return (
         <GameContainer onClick={loadDetailHandler}>
-            <Link to={`/games/${id.toString()}`}>
-                <img src={smallImage(image, 640)} alt={name} className="game-dp" />
+            <Link to={`/${getLink()}/${id.toString()}`}>
+                <img src={image && smallImage(image, 640)} alt={name} className="game-dp" />
                 <div className='game-details'>
                     <div className='platform-icons'>
                         {platforms.map(data => {
-                             return (
-                                     getPlatform(data.platform.name, data.platform.id)
-                                    )
-                            }
+                            return (
+                                getPlatform(data.platform.name, data.platform.id)
+                            )
+                        }
                         )}
                     </div>
                     <h3>{name}</h3>

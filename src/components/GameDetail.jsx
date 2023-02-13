@@ -3,14 +3,13 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 // Styling & Animation
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
 import { useNavigate } from "react-router-dom";
 import { smallImage } from '../util'
 import { FaSteam, FaPlaystation, FaGamepad, FaXbox } from 'react-icons/fa'
 
 //--------------------------------------------------|
 
-const CardShadow = styled(motion.div)`
+const CardShadow = styled.div`
     width: 100%;
     min-height: 100vh;
     background: rgba(0,0,0,0.5);
@@ -23,7 +22,7 @@ const CardShadow = styled(motion.div)`
     align-items: center;
 `
 
-const Detail = styled(motion.div)`
+const Detail = styled.div`
     width: 80%;
     max-width: 800px;
     height: 800px;
@@ -83,21 +82,22 @@ export const GameDetail = () => {
     const exitHandler = (e) => {
         if (e.target.classList.contains('shadow')) {
             document.body.style.overflow = "auto";
-            pathTo("/");
+            pathTo(-1);
         }
     }
 
     function getPlatform(platform, key) {
-        switch(platform){
-            case "PC":
-                return <FaSteam key={key}/>
-            case "Playstaion" || "Playstaion 4" || "Playstaion 5":
-                return <FaPlaystation key={key}/>
-            case "Xbox" || "Xbox X" || "Xbox S":
-                return <FaXbox key={key} />
-            default:
-                return <FaGamepad key={key}/>  
+        const platformName = platform.toLowerCase();
+        if (platformName.includes("pc")) {
+            return <FaSteam key={key} />
         }
+        if (platformName.includes("playstation")) {
+            return <FaPlaystation key={key} />
+        }
+        if (platformName.includes("xbox")) {
+            return <FaXbox key={key} />
+        }
+        return <FaGamepad key={key} />
     }
 
     return (
@@ -125,7 +125,7 @@ export const GameDetail = () => {
                                 </div>
                             </div>
                             <div className="media">
-                                <img src={smallImage(game.background_image, 1280)} alt="image" />
+                                <img src={game.background_image && smallImage(game.background_image, 1280)} alt="image" />
                             </div>
                             <div className="description">
                                 <p>{game.description_raw}</p>
@@ -133,7 +133,7 @@ export const GameDetail = () => {
                             <div className="gallery">
                                 {
                                     screens.results.map((img) => {
-                                        return <img src={smallImage(img.image, 1280)} alt="game" key={img.image} />
+                                        return img.image && <img src={smallImage(img.image, 1280)} alt="game" key={img.image} />
                                     })
                                 }
                             </div>

@@ -1,10 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { HiMenu } from 'react-icons/hi';
 import styled from 'styled-components';
+// Redux
+import { useDispatch } from 'react-redux'
+import { seacrchGames } from '../redux/actions'
+import { useNavigate } from 'react-router-dom';
 
 //------------------------------------------------------->> Components
 
 export const TopBar = () => {
+
+  const dispatch = useDispatch();
+  const [searchText, setSearchText] = useState('');
+  const pathTo = useNavigate();
+
+  function searchHandler(event) {
+    event.preventDefault();
+    dispatch(seacrchGames(searchText));
+    pathTo('/search')
+    setSearchText('');
+  }
+
+  function inputHandler (event) {
+    setSearchText(event.target.value);
+  }
+
   return (
     <TopBarDiv>
       <div className="header-wrapper">
@@ -14,9 +34,9 @@ export const TopBar = () => {
         <div className="links">
           <a href="">Login</a>
           <a href="">Sign up</a>
-          <div className='search-wrapper'>
-            <input type="text" name="search" id="" placeholder='Search' />
-          </div>
+          <form onSubmit={searchHandler} className='search-wrapper'>
+            <input onChange={inputHandler} type="text" name="search" value={searchText} placeholder='Search' />
+          </form>
         </div>
         <HiMenu className='menu-btn' />
       </div>
@@ -91,7 +111,7 @@ const TopBarDiv = styled.header`
     @media screen and (max-width:980px) {
       
       padding-right: 3rem;
-       
+      
       .menu-btn {
         display: block;
       }

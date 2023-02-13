@@ -1,0 +1,4 @@
+* Api refactor
+* Cards div refactor
+* Impleament Search Function
+* Load on Scroll

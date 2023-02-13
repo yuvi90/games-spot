@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadGames } from '../redux/actions/gamesActions'
 // Styling & Animation
 import styled from 'styled-components'
-import { motion } from 'framer-motion'
 
 //--------------------------------------------------|
 // Styles
@@ -24,7 +23,7 @@ const SectionDiv = styled.section`
     }
 `
 
-const GameList = styled(motion.div)`
+const GameList = styled.div`
     .loading {
         ${(props) => props.isLoading ? "display: flex;": null}
         ${(props) => props.isLoading ? "justify-content: center;": null}
@@ -32,7 +31,7 @@ const GameList = styled(motion.div)`
         ${(props) => props.isLoading ? "min-height: 50vh;": null}
     }
 `
-const Games = styled(motion.div)`
+const Games = styled.div`
     margin: 3rem 0;
     min-height: 80vh;
     display: grid;
