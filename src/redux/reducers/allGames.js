@@ -1,5 +1,7 @@
 const initState = {
     games: [],
+    next: null,
+    previous: null,
     isLoading: true,
 }
 
@@ -10,7 +12,17 @@ const allGamesReducer = (state = initState, action) => {
             return {
                 ...state,
                 games: action.payload.allGames,
+                next: action.payload.next,
+                previous: action.payload.previous,
                 isLoading: false
+            }
+        case "FETCH_MORE_GAMES":
+            return {
+                ...state,
+                games: [...state.games,...action.payload.allGames],
+                next: action.payload.next,
+                previous: action.payload.previous,
+                // isLoading: false
             }
         case "LOADING_ALL_GAMES":
             return { ...state, isLoading: true }

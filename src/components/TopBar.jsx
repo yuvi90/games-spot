@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { HiMenu } from 'react-icons/hi';
+import { RxCross2 } from 'react-icons/rx';
 import styled from 'styled-components';
 // Redux
 import { useDispatch } from 'react-redux'
@@ -8,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 //------------------------------------------------------->> Components
 
-export const TopBar = () => {
+export const TopBar = ({ isMenuOpen, setMenuOpen }) => {
 
   const dispatch = useDispatch();
   const [searchText, setSearchText] = useState('');
@@ -21,8 +22,12 @@ export const TopBar = () => {
     setSearchText('');
   }
 
-  function inputHandler (event) {
+  function inputHandler(event) {
     setSearchText(event.target.value);
+  }
+
+  function menuHandler() {
+    setMenuOpen(!isMenuOpen)
   }
 
   return (
@@ -38,7 +43,11 @@ export const TopBar = () => {
             <input onChange={inputHandler} type="text" name="search" value={searchText} placeholder='Search' />
           </form>
         </div>
-        <HiMenu className='menu-btn' />
+        {
+          isMenuOpen ?
+            <HiMenu onClick={menuHandler} className='menu-btn' /> :
+            <RxCross2 onClick={menuHandler} className='menu-btn' />
+        }
       </div>
     </TopBarDiv>
   )
@@ -53,7 +62,7 @@ const TopBarDiv = styled.header`
   width: 100%;
   border-bottom: solid 1px #6b6b6b;
   background: #151515;
-  z-index: 100;
+  z-index: 150;
   
   .header-wrapper {
     margin: 0 auto;

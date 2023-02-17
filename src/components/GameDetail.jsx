@@ -1,11 +1,9 @@
 import React from 'react'
-// Redux
-import { useSelector } from 'react-redux'
-// Styling & Animation
-import styled from 'styled-components'
 import { useNavigate } from "react-router-dom";
 import { smallImage } from '../util'
+import styled from 'styled-components'
 import { FaSteam, FaPlaystation, FaGamepad, FaXbox } from 'react-icons/fa'
+import { useSelector } from 'react-redux'
 
 //--------------------------------------------------|
 
@@ -28,13 +26,22 @@ const Detail = styled.div`
     height: 800px;
     overflow-y: scroll;
     border-radius: 1rem;
-    padding: 2rem 5rem;
+    padding: 3rem 3rem;
     background: #151515;
     color: #fff;
     z-index: 1000;
 
     &::-webkit-scrollbar {
-     display: none;
+        display: none;
+    }
+
+    .details-wrapper{
+        height: 100%;
+        overflow-y: scroll;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
     }
 
     img {
@@ -68,6 +75,22 @@ const Detail = styled.div`
 
     .description {
         margin: 5rem 0;
+    }
+
+    @media screen and (max-width:750px) {
+        
+        padding: 1.5rem 1.5rem;
+        width: 90%;
+
+        .stats {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 2rem;
+        }
+
+        .info {
+            text-align: start;
+        }
     }
 `
 
@@ -107,35 +130,37 @@ export const GameDetail = () => {
                     <div className='loading'><span className="loader"></span></div>
                     : (
                         <Detail>
-                            <div className="stats">
-                                <div className="rating">
-                                    <h3>{game.name}</h3>
-                                    <p>Rating: {game.rating}</p>
-                                </div>
-                                <div className="info">
-                                    <h3>Platforms</h3>
-                                    <div className="platforms">
-                                        {game.platforms.map(data => {
-                                            return (
-                                                getPlatform(data.platform.name, data.platform.id)
-                                            )
-                                        }
-                                        )}
+                            <div className='details-wrapper'>
+                                <div className="stats">
+                                    <div className="rating">
+                                        <h3>{game.name}</h3>
+                                        <p>Rating: {game.rating}</p>
+                                    </div>
+                                    <div className="info">
+                                        <h3>Platforms</h3>
+                                        <div className="platforms">
+                                            {game.platforms.map(data => {
+                                                return (
+                                                    getPlatform(data.platform.name, data.platform.id)
+                                                )
+                                            }
+                                            )}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="media">
-                                <img src={game.background_image && smallImage(game.background_image, 1280)} alt="image" />
-                            </div>
-                            <div className="description">
-                                <p>{game.description_raw}</p>
-                            </div>
-                            <div className="gallery">
-                                {
-                                    screens.results.map((img) => {
-                                        return img.image && <img src={smallImage(img.image, 1280)} alt="game" key={img.image} />
-                                    })
-                                }
+                                <div className="media">
+                                    <img src={game.background_image && smallImage(game.background_image, 1280)} alt="image" />
+                                </div>
+                                <div className="description">
+                                    <p>{game.description_raw}</p>
+                                </div>
+                                <div className="gallery">
+                                    {
+                                        screens.results.map((img) => {
+                                            return img.image && <img src={smallImage(img.image, 1280)} alt="game" key={img.image} />
+                                        })
+                                    }
+                                </div>
                             </div>
                         </Detail>
                     )}

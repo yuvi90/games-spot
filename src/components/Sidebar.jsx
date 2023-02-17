@@ -4,13 +4,18 @@ import styled from 'styled-components';
 
 //----------------------------------------|
 
-export const Sidebar = () => {
+export const Sidebar = ({ isMenuOpen, setMenuOpen }) => {
+
+    function menuHandler() {
+        setMenuOpen(!isMenuOpen)
+    }
+    
     return (
-        <SideBarDiv>
+        <SideBarDiv isMenuOpen={isMenuOpen} >
             <nav className="menu">
                 <ul>
-                    <li><Link to="/">Home</Link></li>
-                    <li><Link to="/all-games">All Games</Link></li>
+                    <li><Link to="/" onClick={menuHandler}>Home</Link></li>
+                    <li><Link to="/all-games" onClick={menuHandler}>All Games</Link></li>
                 </ul>
             </nav>
         </SideBarDiv>
@@ -21,12 +26,26 @@ export const Sidebar = () => {
 //Styling
 
 const SideBarDiv = styled.aside`
+    background-color: #151515;
     margin-top: 10vh;
     position: fixed;
     height: 90vh;
     width: 280px;
     padding: 6rem 0 4rem 3rem;
-    overflow-y: scroll;
+    transition: all 0.5s ease;
+    transform: ${props => props.isMenuOpen ? 'translateX(-100%)' : 'translateX(0)'};
+    opacity: ${props => props.isMenuOpen ? '0' : '1'};
+    z-index: 100;
+
+    @media screen and (max-width:650px) {
+        width: 100%;
+    }
+    
+    @media screen and (min-width:980px) {
+        width: 280px;
+        opacity: 1;
+        transform: translate(0);
+    }
 
     .menu {
         ul {

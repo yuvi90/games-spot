@@ -5,43 +5,6 @@ import { Game } from '../components'
 // Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { loadGames } from '../redux/actions/gamesActions'
-// Styling & Animation
-import styled from 'styled-components'
-
-//--------------------------------------------------|
-// Styles
-
-const SectionDiv = styled.section`
-    padding: 2rem 6rem;
-
-    @media screen and (max-width:980px) {
-        padding: 1rem 3rem;
-    }
-
-    @media screen and (max-width:650px) {
-        padding: 2rem 2rem;
-    }
-`
-
-const GameList = styled.div`
-    .loading {
-        ${(props) => props.isLoading ? "display: flex;": null}
-        ${(props) => props.isLoading ? "justify-content: center;": null}
-        ${(props) => props.isLoading ? "align-items: center;": null}
-        ${(props) => props.isLoading ? "min-height: 50vh;": null}
-    }
-`
-const Games = styled.div`
-    margin: 3rem 0;
-    min-height: 80vh;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-
-    @media screen and (max-width:650px) {
-        grid-template-columns: repeat(1, minmax(250px, 1fr));
-    }
-`
 
 //--------------------------------------------------|
 
@@ -56,15 +19,14 @@ const Home = () => {
     const { popular, newGames, upComing, isLoading } = useSelector(state => state.games);
 
     return (
-        <SectionDiv>
-
+        <>
             <Outlet />
-
-            <GameList isLoading={isLoading} >
-                <h2>Popular Games</h2>
-                {isLoading ?
-                    <div className='loading'><span className="loader"></span></div> :
-                    <Games>
+            {   
+                isLoading ?
+                <div className='loading'><span className="loader"></span></div> :
+                <>
+                    <h2>Popular Games</h2>
+                    <div className='card-grid-container'>
                         {popular.map((game) => {
                             return (
                                 <Game
@@ -77,15 +39,10 @@ const Home = () => {
                                 />
                             );
                         })}
-                    </Games>
-                }
-            </GameList>
+                    </div>
 
-            <GameList isLoading={isLoading} >
-                <h2>New Games</h2>
-                {isLoading ?
-                    <div className='loading'><span className="loader"></span></div> :
-                    <Games>
+                    <h2>New Games</h2>
+                    <div className='card-grid-container'>
                         {newGames.map((game) => {
                             return (
                                 <Game
@@ -98,15 +55,10 @@ const Home = () => {
                                 />
                             );
                         })}
-                    </Games>
-                }
-            </GameList>
+                    </div>
 
-            <GameList isLoading={isLoading} >
-                <h2>Upcoming Games</h2>
-                {isLoading ?
-                    <div className='loading'><span className="loader"></span></div> :
-                    <Games>
+                    <h2>Upcoming Games</h2>
+                    <div className='card-grid-container'>
                         {upComing.map((game) => {
                             return (
                                 <Game
@@ -119,11 +71,10 @@ const Home = () => {
                                 />
                             );
                         })}
-                    </Games>
-                }
-            </GameList>
-
-        </SectionDiv>
+                    </div>
+                </>
+            }
+        </>
     )
 }
 

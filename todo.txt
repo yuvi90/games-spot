@@ -1,4 +1,2 @@
-* Api refactor
-* Cards div refactor
-* Impleament Search Function
-* Load on Scroll
+* Load button on search
+* OnLoad Menu Open

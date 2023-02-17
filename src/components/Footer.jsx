@@ -6,9 +6,7 @@ import styled from 'styled-components'
 export const Footer = () => {
   return (
     <FooterDiv>
-      <div className='footer-container'>
         <p>Made with ❤️</p>
-      </div>
     </FooterDiv>
   )
 }
@@ -16,18 +14,12 @@ export const Footer = () => {
 //------------------------------------------------------->> Styling 
 
 const FooterDiv = styled.footer`
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  background: #151515ed;
+  background: #151515;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  
-  .footer-container {
-    margin: 0 auto;
-    max-width: 1600px;
-  }
 `
