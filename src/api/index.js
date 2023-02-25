@@ -1,5 +1,5 @@
 // Base URL
-const API = "45f656bed3fb41faa61589575732e595";
+const API = import.meta.env.VITE_API;
 const base_url = 'https://api.rawg.io/api/';
 
 // Getting the date
